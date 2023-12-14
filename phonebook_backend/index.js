@@ -35,17 +35,22 @@ app.post('/api/persons',(request, response) => {
     return response.status(400).json({ 
       error: 'content missing' 
     })
-  }
+  } else if (persons.find((person)=> JSON.stringify(person.name) === JSON.stringify(body.name))) {
+    return response.status(400).json({
+       error: 'name must be unique' 
+    })
+  } else {
 
-  const person = {
-    id: Math.floor(Math.random() * 200),
-    name: body.name,
-    number: body.number
-  }
+    const person = {
+      id: Math.floor(Math.random() * 200),
+      name: body.name,
+      number: body.number
+    }
 
-  persons = persons.concat(person)
+    persons = persons.concat(person)
 
-  response.json(person)
+    response.json(person)
+    } 
 })
 
 /* READ */
