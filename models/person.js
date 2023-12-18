@@ -9,7 +9,7 @@ console.log('connecting to', url)
 
 mongoose.connect(url)
 
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {
@@ -18,35 +18,35 @@ mongoose.connect(url)
 
 /* Custom phone number validator function */
 const validatePhoneNumber = (value) => {
-  const phoneNumberRegex = /^(\d{2,3})-(\d+)$/;
+  const phoneNumberRegex = /^(\d{2,3})-(\d+)$/
 
   /* Check if the phone number matches the specified format*/
   if (!phoneNumberRegex.test(value)) {
-    return false;
+    return false
   }
 
   /* Check if the length is 8 or more */
-  const phoneNumberParts = value.split('-');
+  const phoneNumberParts = value.split('-')
   if (phoneNumberParts.join('').length < 8) {
-    return false;
+    return false
   }
 
-  return true;
-};
+  return true
+}
 
 const personSchema = new mongoose.Schema({
-    name: {
-      type: String,    
-      minLength: 3,    
-      required: true 
-    },
-    number: {
-      type: String,
-      validate: {
-        validator: validatePhoneNumber,
-        message: props => `${props.value} is not a valid phone number!`
-      }
+  name: {
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  number: {
+    type: String,
+    validate: {
+      validator: validatePhoneNumber,
+      message: props => `${props.value} is not a valid phone number!`
     }
+  }
 })
 
 personSchema.set('toJSON', {
